@@ -18,7 +18,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::signalConnect() {
     connect(ui->actionFileExit, SIGNAL(triggered()), this, SLOT(applicationClose()));
-    connect(ui->actionRunOpen, SIGNAL(triggered()), this, SLOT(toogleSerialPort()));
+    connect(ui->actionSetupRun, SIGNAL(triggered()), this, SLOT(toogleSerialPort()));
 }
 
 void MainWindow::applicationClose() {
@@ -31,30 +31,11 @@ void MainWindow::initSerialHandler() {
 }
 
 void MainWindow::initChart() {
-    chart = new QChart();
-    chart->legend()->hide();
-    chart->setTitle("OpenGL Accelerated Series");
-    chart->setMaximumHeight(20);
-
-    const int pointCount = 10000;
-
-    QList<QXYSeries *> seriesList;
-
-    QXYSeries *series = new QScatterSeries();
-    QScatterSeries *scatter = static_cast<QScatterSeries *>(series);
-    scatter->setColor(QColor("black"));
-    scatter->setMarkerSize(1);
-    seriesList.append(series);
-    series->setUseOpenGL(true);
-    chart->addSeries(series);
 }
 
 void MainWindow::initUi() {
-    chartView = new QChartView(chart);
-    chartView->setFixedHeight(30);
-    ui->dataLayout->addWidget(chartView, 1, 3, Qt::AlignTop);
-    toogleLamp(ui->dotLamp, false);
-    toogleLamp(ui->dashLamp, false);
+    toogleLamp(ui->dotLabel, false);
+    toogleLamp(ui->dashLabel, false);
 }
 
 void MainWindow::toogleLamp(QWidget *lamp, bool status) {
@@ -67,9 +48,13 @@ void MainWindow::toogleLamp(QWidget *lamp, bool status) {
 }
 
 void MainWindow::toogleSerialPort() {
-    if (ui->actionRunOpen->isChecked()) {
-        serialHandler->start(ui->serialCombo->currentText());
+    QString serialPortName = "/dev/ttyACM0";
+
+    if (ui->actionSetupRun->isChecked()) {
+        ui->serialPortText->setText(serialPortName);
+        serialHandler->start(serialPortName);
     } else {
+        ui->serialPortText->setText("");
         serialHandler->stop();
     }
 }
@@ -77,13 +62,13 @@ void MainWindow::toogleSerialPort() {
 void MainWindow::newKeyStatus(int status) {
     switch (status) {
         case 1:
-            toogleLamp(ui->dotLamp, true);
+            toogleLamp(ui->dotLabel, true);
             break;
         case 2:
-            toogleLamp(ui->dashLamp, true);
+            toogleLamp(ui->dashLabel, true);
             break;
         default:
-            toogleLamp(ui->dotLamp, false);
-            toogleLamp(ui->dashLamp, false);
+            toogleLamp(ui->dotLabel, false);
+            toogleLamp(ui->dashLabel, false);
     }
 }

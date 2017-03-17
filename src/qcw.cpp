@@ -1,9 +1,13 @@
 #include <QApplication>
 
+#include "qcw.hxx"
 #include "mainwindow.hxx"
 
 int main(int argc, char *argv[]) {
-    QCoreApplication::setApplicationName("qcw");
+    QCoreApplication::setApplicationName(APPLICATION_NAME);
+    QCoreApplication::setApplicationVersion(APPLICATION_VERSION);
+    QCoreApplication::setOrganizationDomain(ORGANIZATION_DOMAIN);
+    QCoreApplication::setOrganizationName(ORGANIZATION_NAME);
 
     QApplication a(argc, argv);
 

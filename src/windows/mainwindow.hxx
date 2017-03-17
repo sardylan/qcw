@@ -2,13 +2,8 @@
 #define __QCW_MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtCharts/QChart>
-#include <QtCharts/QChartView>
-#include <QtCharts/QValueAxis>
 
 #include "serialhandler.hxx"
-
-QT_CHARTS_USE_NAMESPACE
 
 namespace Ui {
     class MainWindow;
@@ -25,9 +20,6 @@ public:
 private:
     Ui::MainWindow *ui;
     SerialHandler *serialHandler;
-
-    QChart *chart;
-    QChartView *chartView;
 
     void signalConnect();
 

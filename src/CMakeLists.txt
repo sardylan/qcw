@@ -1,16 +1,31 @@
+add_subdirectory(handler)
+add_subdirectory(windows)
+
 set(QCW_SOURCES
-        qcw.cpp
-        mainwindow.cxx
-        serialhandler.cpp)
+        qcw.cpp)
 
 set(QCW_HEADERS
-        mainwindow.hxx
-        serialhandler.hxx)
+        qcw.hxx)
 
-set(QCW_UIS
-        mainwindow.ui)
+set(QCW_RESOURCES
+        resources.qrc)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui SerialPort Charts)
+find_package(Qt5 REQUIRED COMPONENTS
+        Core
+        Widgets
+        Gui
+        SerialPort
+        OpenGL)
 
-add_executable(qcw ${QCW_SOURCES} ${QCW_HEADERS})
-target_link_libraries(qcw Qt5::Core Qt5::Widgets Qt5::Gui Qt5::SerialPort Qt5::Charts)
+add_executable(qcw
+        ${QCW_SOURCES}
+        ${QCW_HEADERS}
+        ${QCW_RESOURCES})
+
+target_link_libraries(qcw
+        windows
+        Qt5::Core
+        Qt5::Widgets
+        Qt5::Gui
+        Qt5::SerialPort
+        Qt5::OpenGL)
