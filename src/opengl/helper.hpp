@@ -15,10 +15,8 @@ public:
 
 private:
     QBrush background;
-    QBrush circleBrush;
-    QFont textFont;
-    QPen circlePen;
-    QPen textPen;
+    QBrush brush;
+    QPen pen;
 };
 
 #endif
