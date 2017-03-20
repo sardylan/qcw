@@ -1,8 +1,8 @@
 set(QCW_HANDLER_SOURCES
-        serialhandler.cxx)
+        serialhandler.cpp)
 
 set(QCW_HANDLER_HEADERS
-        serialhandler.hxx)
+        serialhandler.hpp)
 
 find_package(Qt5 REQUIRED COMPONENTS
         Core

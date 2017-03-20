@@ -2,8 +2,7 @@
 #define __QCW_MAINWINDOW_H
 
 #include <QMainWindow>
-
-#include "serialhandler.hxx"
+#include <config.hpp>
 
 namespace Ui {
     class MainWindow;
@@ -17,17 +16,22 @@ public:
 
     ~MainWindow();
 
+public slots:
+
+    void newKeyStatus(int status);
+
+    void newSerialStatus(bool status);
+
 private:
+
     Ui::MainWindow *ui;
-    SerialHandler *serialHandler;
+    Config *config;
 
     void signalConnect();
 
-    void initSerialHandler();
-
-    void initChart();
-
     void initUi();
+
+    void showStatusBarMessage(QString message);
 
 private slots:
 
@@ -37,7 +41,9 @@ private slots:
 
     void toogleSerialPort();
 
-    void newKeyStatus(int status);
+signals:
+
+    void newActionRun(bool);
 };
 
 #endif

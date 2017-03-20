@@ -12,6 +12,12 @@ public:
 
     ~SerialHandler();
 
+public slots:
+
+    void start(QString portName);
+
+    void stop();
+
 private:
 
     QSerialPort *serialPort;
@@ -20,14 +26,12 @@ private slots:
 
     void readData();
 
-public slots:
-
-    void start(QString portName);
-
-    void stop();
-
 signals:
+
+    void newStatus(bool status);
+
     void newEvent(int key);
+
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "serialhandler.hxx"
+#include "serialhandler.hpp"
 
 SerialHandler::SerialHandler(QObject *parent) : QObject(parent) {
     serialPort = new QSerialPort();
@@ -18,12 +18,15 @@ void SerialHandler::start(QString portName) {
     serialPort->setStopBits(QSerialPort::OneStop);
     serialPort->setFlowControl(QSerialPort::NoFlowControl);
 
-    serialPort->open(QIODevice::ReadWrite);
+    bool status = serialPort->open(QIODevice::ReadWrite);
+    emit newStatus(status);
 }
 
 void SerialHandler::stop() {
     if (serialPort->isOpen())
         serialPort->close();
+
+    emit newStatus(false);
 }
 
 void SerialHandler::readData() {

@@ -1,3 +1,4 @@
+add_subdirectory(config)
 add_subdirectory(handler)
 add_subdirectory(windows)
 
@@ -5,7 +6,7 @@ set(QCW_SOURCES
         qcw.cpp)
 
 set(QCW_HEADERS
-        qcw.hxx)
+        qcw.hpp)
 
 set(QCW_RESOURCES
         resources.qrc)
@@ -23,6 +24,8 @@ add_executable(qcw
         ${QCW_RESOURCES})
 
 target_link_libraries(qcw
+        config
+        handler
         windows
         Qt5::Core
         Qt5::Widgets

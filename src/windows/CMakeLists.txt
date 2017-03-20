@@ -1,10 +1,6 @@
-set(QCW_WINDOWS_SOURCES
-        mainwindow.cxx)
-
-set(QCW_WINDOWS_HEADERS
-        mainwindow.hxx)
-
-set(QCW_WINDOWS_UIS
+set(QCW_WINDOWS_MAIN
+        mainwindow.cpp
+        mainwindow.hpp
         mainwindow.ui)
 
 find_package(Qt5 REQUIRED COMPONENTS
@@ -15,12 +11,10 @@ find_package(Qt5 REQUIRED COMPONENTS
         OpenGL)
 
 add_library(windows
-        ${QCW_WINDOWS_SOURCES}
-        ${QCW_WINDOWS_HEADERS}
-        ${QCW_WINDOWS_UIS})
+        ${QCW_WINDOWS_MAIN})
 
 target_link_libraries(windows
-        handler
+        config
         Qt5::Core
         Qt5::Widgets
         Qt5::Gui
