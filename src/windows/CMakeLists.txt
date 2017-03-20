@@ -15,6 +15,7 @@ add_library(windows
 
 target_link_libraries(windows
         config
+        opengl
         Qt5::Core
         Qt5::Widgets
         Qt5::Gui

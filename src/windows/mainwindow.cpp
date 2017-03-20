@@ -1,23 +1,39 @@
 #include <QDebug>
+#include <QOpenGLWidget>
 
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+    helper = new Helper();
+    glWidget = new GLWidget(helper, this);
     config = Config::getInstance();
+    timer = new QTimer();
 
     signalConnect();
+    initOpenGL();
+    initTimer();
     initUi();
 }
 
 MainWindow::~MainWindow() {
+    delete timer;
     delete ui;
 }
 
 void MainWindow::signalConnect() {
     connect(ui->actionFileExit, SIGNAL(triggered()), this, SLOT(applicationClose()));
     connect(ui->actionSetupRun, SIGNAL(triggered()), this, SLOT(toogleSerialPort()));
+}
+
+void MainWindow::initOpenGL() {
+    ui->stackedWidget->addWidget(glWidget);
+}
+
+void MainWindow::initTimer() {
+    connect(timer, SIGNAL(timeout()), this, SLOT(animateOpenGL()));
 }
 
 void MainWindow::initUi() {
@@ -69,6 +85,9 @@ void MainWindow::toogleSerialPort() {
         ui->serialPortText->setText("");
         emit newActionRun(ui->actionSetupRun->isChecked());
     }
+}
+
+void MainWindow::animateOpenGL() {
 }
 
 void MainWindow::showStatusBarMessage(QString message) {

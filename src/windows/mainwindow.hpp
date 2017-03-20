@@ -2,7 +2,10 @@
 #define __QCW_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
+
 #include <config.hpp>
+#include <glwidget.hpp>
 
 namespace Ui {
     class MainWindow;
@@ -25,9 +28,18 @@ public slots:
 private:
 
     Ui::MainWindow *ui;
+
+    Helper *helper;
+    GLWidget *glWidget;
+
     Config *config;
+    QTimer *timer;
 
     void signalConnect();
+
+    void initOpenGL();
+
+    void initTimer();
 
     void initUi();
 
@@ -40,6 +52,8 @@ private slots:
     void toogleLamp(QWidget *lamp, bool status);
 
     void toogleSerialPort();
+
+    void animateOpenGL();
 
 signals:
 
