@@ -2,6 +2,7 @@
 #define __QCW_WINDOWS_CONFIGWINDOW_H
 
 #include <QDialog>
+
 #include <config.hpp>
 
 namespace Ui {
@@ -24,9 +25,19 @@ private:
 
     void initUi();
 
+    void load();
+
+    void save();
+
 private slots:
 
-    void loadConfig();
+    void handleOK();
+
+    void handleApply();
+
+    void handleClose();
+
+    void handleReset();
 };
 
 #endif
