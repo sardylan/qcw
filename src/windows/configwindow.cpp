@@ -34,7 +34,7 @@ void ConfigWindow::initUi() {
 
     for (portIterator = portList.begin(); portIterator != portList.end(); portIterator++) {
         QSerialPortInfo serialPortInfo = *portIterator;
-        ui->serialPortCombo->addItem(serialPortInfo.portName());
+        ui->serialPortCombo->addItem(serialPortInfo.systemLocation());
     }
 
     ui->serialSpeedCombo->clear();
@@ -50,6 +50,7 @@ void ConfigWindow::initUi() {
 
 void ConfigWindow::handleOK() {
     save();
+    close();
 }
 
 void ConfigWindow::handleApply() {
@@ -89,5 +90,8 @@ void ConfigWindow::load() {
 }
 
 void ConfigWindow::save() {
+    config->setPortName(ui->serialPortCombo->currentText());
+    config->setPortSpeed(ui->serialSpeedCombo->currentData().value<QSerialPort::BaudRate>());
 
+    ConfigManager::save();
 }
