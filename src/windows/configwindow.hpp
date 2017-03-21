@@ -1,5 +1,5 @@
-#ifndef __QCW_CONFIGWINDOW_H
-#define __QCW_CONFIGWINDOW_H
+#ifndef __QCW_WINDOWS_CONFIGWINDOW_H
+#define __QCW_WINDOWS_CONFIGWINDOW_H
 
 #include <QDialog>
 
