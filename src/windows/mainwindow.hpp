@@ -55,9 +55,13 @@ private slots:
 
     void animateOpenGL();
 
+    void showConfigWindow();
+
 signals:
 
     void newActionRun(bool);
+
+    void actionConfig();
 };
 
 #endif

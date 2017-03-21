@@ -2,6 +2,7 @@
 #define __QCW_WINDOWS_CONFIGWINDOW_H
 
 #include <QDialog>
+#include <config.hpp>
 
 namespace Ui {
     class ConfigWindow;
@@ -17,10 +18,15 @@ public:
 
 private:
     Ui::ConfigWindow *ui;
+    Config *config;
 
     void signalConnect();
 
     void initUi();
+
+private slots:
+
+    void loadConfig();
 };
 
 #endif

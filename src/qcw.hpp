@@ -31,6 +31,8 @@ public slots:
 
     void newActionRun(bool status);
 
+    void showConfigWindow();
+
 private:
     Config *config;
     SerialHandler *serialHandler;

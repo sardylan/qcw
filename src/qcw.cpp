@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <config/manager.hpp>
+#include <windows/configwindow.hpp>
 
 #include "qcw.hpp"
 
@@ -34,6 +35,7 @@ void QCw::prepare() {
     connect(serialHandler, SIGNAL(newEvent(int)), mainWindow, SLOT(newKeyStatus(int)));
 
     connect(mainWindow, SIGNAL(newActionRun(bool)), this, SLOT(newActionRun(bool)));
+    connect(mainWindow, SIGNAL(actionConfig()), this, SLOT(showConfigWindow()));
 }
 
 int QCw::run() {
@@ -47,4 +49,10 @@ void QCw::newActionRun(bool status) {
         serialHandler->start(config->getPortName(), config->getPortSpeed());
     else
         serialHandler->stop();
+}
+
+void QCw::showConfigWindow() {
+    ConfigWindow configWindow;
+
+    configWindow.exec();
 }

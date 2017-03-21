@@ -25,6 +25,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::signalConnect() {
     connect(ui->actionFileExit, SIGNAL(triggered()), this, SLOT(applicationClose()));
+    connect(ui->actionSetupConfig, SIGNAL(triggered()), this, SLOT(showConfigWindow()));
     connect(ui->actionSetupRun, SIGNAL(triggered()), this, SLOT(toogleSerialPort()));
 }
 
@@ -92,4 +93,8 @@ void MainWindow::animateOpenGL() {
 
 void MainWindow::showStatusBarMessage(QString message) {
     ui->statusBar->showMessage(message, 5000);
+}
+
+void MainWindow::showConfigWindow() {
+    emit actionConfig();
 }
