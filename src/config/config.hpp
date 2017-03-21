@@ -2,8 +2,17 @@
 #define __QCW_CONFIG_CONFIG_H
 
 #include <QtCore/QString>
+#include <QtSerialPort/QSerialPort>
 
 class Config {
+
+private:
+    Config();
+
+    static Config *instance;
+
+    QString portName;
+    QSerialPort::BaudRate portSpeed;
 
 public:
     static Config *getInstance();
@@ -12,12 +21,9 @@ public:
 
     void setPortName(const QString &portName);
 
-private:
-    Config();
+    QSerialPort::BaudRate getPortSpeed() const;
 
-    static Config *instance;
-
-    QString portName;
+    void setPortSpeed(QSerialPort::BaudRate portSpeed);
 
 };
 

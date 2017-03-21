@@ -10,16 +10,16 @@ SerialHandler::~SerialHandler() {
     delete (serialPort);
 }
 
-void SerialHandler::start(QString portName) {
+void SerialHandler::start(QString portName, QSerialPort::BaudRate baudRate) {
     serialPort->setPortName(portName);
-    serialPort->setBaudRate(QSerialPort::Baud115200);
+    serialPort->setBaudRate(baudRate);
     serialPort->setDataBits(QSerialPort::Data8);
     serialPort->setParity(QSerialPort::NoParity);
     serialPort->setStopBits(QSerialPort::OneStop);
     serialPort->setFlowControl(QSerialPort::NoFlowControl);
 
-    bool status = serialPort->open(QIODevice::ReadWrite);
-    emit newStatus(status);
+    if (serialPort->open(QIODevice::ReadWrite))
+        emit newStatus(true);
 }
 
 void SerialHandler::stop() {

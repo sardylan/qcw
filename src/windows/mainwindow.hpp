@@ -1,5 +1,5 @@
-#ifndef __QCW_MAINWINDOW_H
-#define __QCW_MAINWINDOW_H
+#ifndef __QCW_WINDOW_MAIN_H
+#define __QCW_WINDOW_MAIN_H
 
 #include <QMainWindow>
 #include <QTimer>

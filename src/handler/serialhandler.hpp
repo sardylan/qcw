@@ -14,7 +14,7 @@ public:
 
 public slots:
 
-    void start(QString portName);
+    void start(QString portName, QSerialPort::BaudRate baudRate);
 
     void stop();
 

@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <config/manager.hpp>
 
 #include "qcw.hpp"
 
@@ -26,6 +27,9 @@ QCw::~QCw() {
 }
 
 void QCw::prepare() {
+    ConfigManager::load();
+    ConfigManager::save();
+
     connect(serialHandler, SIGNAL(newStatus(bool)), mainWindow, SLOT(newSerialStatus(bool)));
     connect(serialHandler, SIGNAL(newEvent(int)), mainWindow, SLOT(newKeyStatus(int)));
 
@@ -40,7 +44,7 @@ int QCw::run() {
 
 void QCw::newActionRun(bool status) {
     if (status)
-        serialHandler->start(config->getPortName());
+        serialHandler->start(config->getPortName(), config->getPortSpeed());
     else
         serialHandler->stop();
 }

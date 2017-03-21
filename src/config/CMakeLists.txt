@@ -1,8 +1,11 @@
 set(QCW_CONFIG_SOURCES
-        config.cpp)
+        config.cpp
+        manager.cpp)
 
 set(QCW_CONFIG_HEADERS
-        config.hpp)
+        default.hpp
+        config.hpp
+        manager.hpp)
 
 find_package(Qt5 REQUIRED COMPONENTS
         Core
