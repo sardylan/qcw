@@ -32,7 +32,7 @@ void QCw::prepare() {
     ConfigManager::save();
 
     connect(serialHandler, SIGNAL(newStatus(bool)), mainWindow, SLOT(newSerialStatus(bool)));
-    connect(serialHandler, SIGNAL(newEvent(int)), mainWindow, SLOT(newKeyStatus(int)));
+    connect(serialHandler, SIGNAL(newEvent(bool)), mainWindow, SLOT(newKeyStatus(bool)));
 
     connect(mainWindow, SIGNAL(newActionRun(bool)), this, SLOT(newActionRun(bool)));
     connect(mainWindow, SIGNAL(actionConfig()), this, SLOT(showConfigWindow()));

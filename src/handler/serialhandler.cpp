@@ -34,13 +34,10 @@ void SerialHandler::readData() {
     serialPort->read(&c, 1);
 
     switch (c) {
-        case '.':
-            emit newEvent(1);
-            break;
-        case '-':
-            emit newEvent(2);
+        case '#':
+            emit newEvent(true);
             break;
         default:
-            emit newEvent(0);
+            emit newEvent(false);
     }
 }

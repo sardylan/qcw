@@ -21,7 +21,7 @@ public:
 
 public slots:
 
-    void newKeyStatus(int status);
+    void newKeyStatus(bool status);
 
     void newSerialStatus(bool status);
 

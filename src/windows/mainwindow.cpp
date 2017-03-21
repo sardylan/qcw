@@ -38,22 +38,11 @@ void MainWindow::initTimer() {
 }
 
 void MainWindow::initUi() {
-    toogleLamp(ui->dotLabel, false);
-    toogleLamp(ui->dashLabel, false);
+    toogleLamp(ui->keyStatus, false);
 }
 
-void MainWindow::newKeyStatus(int status) {
-    switch (status) {
-        case 1:
-            toogleLamp(ui->dotLabel, true);
-            break;
-        case 2:
-            toogleLamp(ui->dashLabel, true);
-            break;
-        default:
-            toogleLamp(ui->dotLabel, false);
-            toogleLamp(ui->dashLabel, false);
-    }
+void MainWindow::newKeyStatus(bool status) {
+    toogleLamp(ui->keyStatus, status);
 }
 
 void MainWindow::newSerialStatus(bool status) {

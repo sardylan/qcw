@@ -30,7 +30,7 @@ signals:
 
     void newStatus(bool status);
 
-    void newEvent(int key);
+    void newEvent(bool keyStatus);
 
 };
 
