@@ -44,10 +44,10 @@ void GLWidget::paintEvent(QPaintEvent *event) {
     QBrush blackBrush = QBrush(Qt::black);
 
     QPen whitePen = QPen(Qt::white);
-    whitePen.setWidth(5);
+    whitePen.setWidth(0);
 
     QPen blackPen = QPen(Qt::black);
-    blackPen.setWidth(5);
+    blackPen.setWidth(0);
 
     QPainter painter;
     painter.begin(this);
@@ -58,7 +58,11 @@ void GLWidget::paintEvent(QPaintEvent *event) {
     for (int x = 0; x < points.size(); x++) {
         painter.save();
         painter.setPen(points.at(x) ? blackPen : whitePen);
+        painter.drawPoint(QPoint(x, 13));
+        painter.drawPoint(QPoint(x, 14));
         painter.drawPoint(QPoint(x, 15));
+        painter.drawPoint(QPoint(x, 16));
+        painter.drawPoint(QPoint(x, 17));
         painter.restore();
     }
 
