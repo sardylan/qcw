@@ -33,7 +33,7 @@
 #define APPLICATION_VERSION "0.99.0"
 
 #define ORGANIZATION_NAME "The HellNet.org"
-#define ORGANIZATION_DOMAIN "ham.thehellnet.org"
+#define ORGANIZATION_DOMAIN "thehellnet.org"
 
 class QCw : public QApplication {
 Q_OBJECT
