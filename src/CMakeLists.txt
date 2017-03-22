@@ -10,6 +10,7 @@ set(QCW_HEADERS
         qcw.hpp)
 
 set(QCW_RESOURCES
+        qcw.rc
         resources.qrc)
 
 find_package(Qt5 REQUIRED COMPONENTS
@@ -19,7 +20,7 @@ find_package(Qt5 REQUIRED COMPONENTS
         SerialPort
         OpenGL)
 
-add_executable(qcw
+add_executable(qcw WIN32
         ${QCW_SOURCES}
         ${QCW_HEADERS}
         ${QCW_RESOURCES})
