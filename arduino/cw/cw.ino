@@ -17,9 +17,8 @@
 #define WAIT_PULSE_MIN 40
 #define WAIT_PULSE_MAX 150
 
-#define KEY_LEVEL_OFF 0
-#define KEY_LEVEL_DOT 1
-#define KEY_LEVEL_DASH 2
+#define KEY_CHAR_ON "#"
+#define KEY_CHAR_OFF "#"
 
 bool sound = false;
 bool dir = false;
@@ -32,116 +31,115 @@ bool inDash = false;
 bool inWait = false;
 
 void setup() {
-  pinMode(PIN_LED_GENERIC, OUTPUT);
-  pinMode(PIN_LED_DOT, OUTPUT);
-  pinMode(PIN_LED_DASH, OUTPUT);
+    pinMode(PIN_LED_GENERIC, OUTPUT);
+    pinMode(PIN_LED_DOT, OUTPUT);
+    pinMode(PIN_LED_DASH, OUTPUT);
 
-  pinMode(PIN_OUTPUT_SOUND, OUTPUT);
+    pinMode(PIN_OUTPUT_SOUND, OUTPUT);
 
-  pinMode(PIN_KEY_DOT, INPUT);
-  pinMode(PIN_KEY_DASH, INPUT);
-  pinMode(PIN_KEY_MANUAL, INPUT);
+    pinMode(PIN_KEY_DOT, INPUT);
+    pinMode(PIN_KEY_DASH, INPUT);
+    pinMode(PIN_KEY_MANUAL, INPUT);
 
-  digitalWrite(PIN_LED_GENERIC, LOW);
-  digitalWrite(PIN_LED_DOT, LOW);
-  digitalWrite(PIN_LED_DASH, LOW);
+    digitalWrite(PIN_LED_GENERIC, LOW);
+    digitalWrite(PIN_LED_DOT, LOW);
+    digitalWrite(PIN_LED_DASH, LOW);
 
-  Serial.begin(115200, SERIAL_8N1);
+    Serial.begin(115200, SERIAL_8N1);
 }
 
 void loop() {
-  bool pinKeyDot = digitalRead(PIN_KEY_DOT);
-  bool pinKeyDash = digitalRead(PIN_KEY_DASH);
-  bool pinKeyManual = digitalRead(PIN_KEY_MANUAL);
+    bool pinKeyDot = digitalRead(PIN_KEY_DOT);
+    bool pinKeyDash = digitalRead(PIN_KEY_DASH);
+    bool pinKeyManual = digitalRead(PIN_KEY_MANUAL);
 
-  if(pinKeyDot || pinKeyDash || pinKeyManual) {
-    if(pinKeyManual) {
-      ledDot(true);
-      ledDash(true);
-      sound = true;
+    if (pinKeyDot || pinKeyDash || pinKeyManual) {
+        if (pinKeyManual) {
+            ledDot(true);
+            ledDash(true);
+            sound = true;
+        } else {
+            ledDot(pinKeyDot);
+            ledDash(pinKeyDash);
+        }
     } else {
-      ledDot(pinKeyDot);
-      ledDash(pinKeyDash);
+        ledDot(false);
+        ledDash(false);
+        sound = false;
     }
-  } else {
-    ledDot(false);
-    ledDash(false);
-    sound = false;
-  }
 
-  pulse(pinKeyDot, pinKeyDash);
+    pulse(pinKeyDot, pinKeyDash);
 
-  doSound();
-  ledGeneric(sound);
-  serial(sound);
+    doSound();
+    ledGeneric(sound);
+    serial(sound);
 }
 
 void ledGeneric(bool enable) {
-  digitalWrite(PIN_LED_GENERIC, enable);
+    digitalWrite(PIN_LED_GENERIC, enable);
 }
 
 void ledDot(bool enable) {
-  digitalWrite(PIN_LED_DOT, enable);
+    digitalWrite(PIN_LED_DOT, enable);
 }
 
 void ledDash(bool enable) {
-  digitalWrite(PIN_LED_DASH, enable);
+    digitalWrite(PIN_LED_DASH, enable);
 }
 
 void pulse(bool dot, bool dash) {
-  int wait = WAIT_PULSE_MIN + (int) ((WAIT_PULSE_MAX - WAIT_PULSE_MIN) * ((float) analogRead(PIN_SPEED) / 1024));
+    int wait = WAIT_PULSE_MIN + (int) ((WAIT_PULSE_MAX - WAIT_PULSE_MIN) * ((float) analogRead(PIN_SPEED) / 1024));
 
-  if(inDot || inDash || inWait) {
-    sound = inDot || inDash;
+    if (inDot || inDash || inWait) {
+        sound = inDot || inDash;
 
-    if(inWait) {
-      sound = false;
+        if (inWait) {
+            sound = false;
 
-      if(millis() - inTimer > wait) {
+            if (millis() - inTimer > wait) {
+                inTimer = millis();
+                inWait = false;
+            }
+        } else if ((millis() - inTimer) > (inDash ? wait : wait * 3)) {
+            inTimer = millis();
+            sound = false;
+            inDot = false;
+            inDash = false;
+            inWait = true;
+        }
+    } else if (dot || dash) {
         inTimer = millis();
-        inWait = false;
-      }
-    } else if((millis() - inTimer) > (inDash ? wait : wait * 3)) {
-      inTimer = millis();
-      sound = false;
-      inDot = false;
-      inDash = false;
-      inWait = true;
-    }
-  } else if(dot || dash) {
-    inTimer = millis();
-    sound = true;
+        sound = true;
 
-    if(dash)
-      inDash = true;
-    else if(dot)
-      inDot = true;
-  }
+        if (dash)
+            inDash = true;
+        else
+            inDot = true;
+    }
 }
 
 void doSound() {
-  int wait = WAIT_SOUND_MIN + (int) ((WAIT_SOUND_MAX - WAIT_SOUND_MIN) * ((float) analogRead(PIN_TONE) / 1024));
+    int wait = WAIT_SOUND_MIN + (int) ((WAIT_SOUND_MAX - WAIT_SOUND_MIN) * ((float) analogRead(PIN_TONE) / 1024));
 
-  if(!dir) {
-    dir = true;
-    digitalWrite(PIN_OUTPUT_SOUND, sound);
-  } else {
-    dir = false;
-    digitalWrite(PIN_OUTPUT_SOUND, LOW);
-  }
+    if (!dir) {
+        dir = true;
+        digitalWrite(PIN_OUTPUT_SOUND, sound);
+    } else {
+        dir = false;
+        digitalWrite(PIN_OUTPUT_SOUND, LOW);
+    }
 
-  delayMicroseconds(wait);
+    delayMicroseconds(wait);
 }
 
 void serial(bool keyStatus) {
-  if(keyStatus == lastKeyStatus)
-    return;
+    if (keyStatus == lastKeyStatus)
+        return;
 
-  lastKeyStatus = keyStatus;
+    lastKeyStatus = keyStatus;
 
-  if(lastKeyStatus)
-    Serial.write("#");
-  else
-    Serial.write(" ");
+    if (lastKeyStatus)
+        Serial.write(KEY_CHAR_ON);
+    else
+        Serial.write(KEY_CHAR_OFF);
 }
-
