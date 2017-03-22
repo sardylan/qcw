@@ -29,17 +29,13 @@ private:
 
     Ui::MainWindow *ui;
 
-    Helper *helper;
     GLWidget *glWidget;
 
     Config *config;
-    QTimer *timer;
 
     void signalConnect();
 
     void initOpenGL();
-
-    void initTimer();
 
     void initUi();
 
@@ -52,8 +48,6 @@ private slots:
     void toogleLamp(QWidget *lamp, bool status);
 
     void toogleSerialPort();
-
-    void animateOpenGL();
 
     void showConfigWindow();
 

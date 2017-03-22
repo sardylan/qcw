@@ -1,12 +1,8 @@
 set(QCW_OPENGL_SOURCES
-        glwidget.cpp
-        helper.cpp
-        pointlist.cpp)
+        glwidget.cpp)
 
 set(QCW_OPENGL_HEADERS
-        glwidget.hpp
-        helper.hpp
-        pointlist.hpp)
+        glwidget.hpp)
 
 find_package(Qt5 REQUIRED COMPONENTS
         Core
