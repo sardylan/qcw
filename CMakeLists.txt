@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(QT5_PREFIX "/opt/qt5" CACHE STRING "Qt5 prefix path")
+set(QT5_PREFIX "$ENV{QTDIR}" CACHE PATH "Qt5 prefix path")
 
 set(CMAKE_PREFIX_PATH "${QT5_PREFIX}/lib/cmake")
 
