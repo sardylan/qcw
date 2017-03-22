@@ -37,7 +37,10 @@ void SerialHandler::readData() {
         case '#':
             emit newEvent(true);
             break;
-        default:
+        case ' ':
             emit newEvent(false);
+            break;
+        default:
+            break;
     }
 }
