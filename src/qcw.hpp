@@ -30,7 +30,7 @@
 #include <config/config.hpp>
 
 #define APPLICATION_NAME "qCw"
-#define APPLICATION_VERSION "0.99.0"
+#define APPLICATION_VERSION "0.99.1"
 
 #define ORGANIZATION_NAME "The HellNet.org"
 #define ORGANIZATION_DOMAIN "thehellnet.org"
