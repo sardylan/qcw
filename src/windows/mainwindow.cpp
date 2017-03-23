@@ -44,6 +44,9 @@ void MainWindow::signalConnect() {
     connect(ui->actionFileExit, SIGNAL(triggered()), this, SLOT(applicationClose()));
     connect(ui->actionSetupConfig, SIGNAL(triggered()), this, SLOT(showConfigWindow()));
     connect(ui->actionSetupRun, SIGNAL(triggered()), this, SLOT(toogleSerialPort()));
+
+    connect(ui->clearLineButton, SIGNAL(clicked()), this, SLOT(clearLine()));
+    connect(ui->clearTextButton, SIGNAL(clicked()), this, SLOT(clearText()));
 }
 
 void MainWindow::initOpenGL() {
@@ -56,6 +59,11 @@ void MainWindow::initUi() {
 
 void MainWindow::newKeyStatus(bool status) {
     toogleLamp(ui->keyStatus, status);
+
+    ui->morseText->moveCursor(QTextCursor::End);
+    ui->morseText->insertPlainText(status ? "#" : "-");
+    ui->morseText->moveCursor(QTextCursor::End);
+
     glWidget->setKeyStatus(status);
 }
 
@@ -85,13 +93,7 @@ void MainWindow::toogleLamp(QWidget *lamp, bool status) {
 }
 
 void MainWindow::toogleSerialPort() {
-    if (ui->actionSetupRun->isChecked()) {
-        ui->serialPortText->setText(config->getPortName());
-        emit newActionRun(ui->actionSetupRun->isChecked());
-    } else {
-        ui->serialPortText->setText("");
-        emit newActionRun(ui->actionSetupRun->isChecked());
-    }
+    emit newActionRun(ui->actionSetupRun->isChecked());
 }
 
 void MainWindow::showStatusBarMessage(QString message) {
@@ -100,4 +102,12 @@ void MainWindow::showStatusBarMessage(QString message) {
 
 void MainWindow::showConfigWindow() {
     emit actionConfig();
+}
+
+void MainWindow::clearLine() {
+    glWidget->clear();
+}
+
+void MainWindow::clearText() {
+    ui->morseText->clear();
 }

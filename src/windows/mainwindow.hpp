@@ -72,6 +72,10 @@ private slots:
 
     void showConfigWindow();
 
+    void clearLine();
+
+    void clearText();
+
 signals:
 
     void newActionRun(bool);
