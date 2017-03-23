@@ -38,8 +38,9 @@
 #define WAIT_PULSE_MIN 40
 #define WAIT_PULSE_MAX 150
 
-#define KEY_CHAR_ON "#"
-#define KEY_CHAR_OFF "#"
+#define KEY_LEVEL_OFF 0
+#define KEY_LEVEL_DOT 1
+#define KEY_LEVEL_DASH 2
 
 bool sound = false;
 bool dir = false;
@@ -91,13 +92,13 @@ void loop() {
 
     pulse(pinKeyDot, pinKeyDash);
 
+    ledGeneric();
     doSound();
-    ledGeneric(sound);
-    serial(sound);
+    serial();
 }
 
-void ledGeneric(bool enable) {
-    digitalWrite(PIN_LED_GENERIC, enable);
+void ledGeneric() {
+    digitalWrite(PIN_LED_GENERIC, sound);
 }
 
 void ledDot(bool enable) {
@@ -153,14 +154,16 @@ void doSound() {
     delayMicroseconds(wait);
 }
 
-void serial(bool keyStatus) {
-    if (keyStatus == lastKeyStatus)
+void serial() {
+    if (sound == lastKeyStatus)
         return;
 
-    lastKeyStatus = keyStatus;
+    lastKeyStatus = sound;
 
-    if (lastKeyStatus)
-        Serial.write(KEY_CHAR_ON);
+    if (sound)
+        Serial.write("#");
     else
-        Serial.write(KEY_CHAR_OFF);
+        Serial.write(" ");
+
+    Serial.flush();
 }
