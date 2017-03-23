@@ -25,7 +25,9 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 
-#define TICK_SIZE 15
+#define TIMER_MILLIS 10
+#define TICK_INTERVAL_SMALL 25
+#define TICK_INTERVAL_BIG 4
 
 class GLWidget : public QOpenGLWidget {
 Q_OBJECT
@@ -41,6 +43,8 @@ public slots:
 
     void stop();
 
+    void clear();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 
@@ -48,7 +52,8 @@ private:
     bool keyStatus;
     QTimer *timer;
     QList<bool> points;
-    int tickShift;
+    int tickShiftSmall;
+    int tickShiftBig;
 
     void initTimer();
 

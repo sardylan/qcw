@@ -29,7 +29,8 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     timer = new QTimer();
 
     keyStatus = false;
-    tickShift = 0;
+    tickShiftSmall = 0;
+    tickShiftBig = 0;
 
     setAutoFillBackground(false);
 
@@ -38,7 +39,7 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
 
 void GLWidget::initTimer() {
     connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
-    timer->setInterval(10);
+    timer->setInterval(TIMER_MILLIS);
     timer->setSingleShot(false);
 }
 
@@ -48,6 +49,12 @@ void GLWidget::start() {
 
 void GLWidget::stop() {
     timer->stop();
+}
+
+void GLWidget::clear() {
+    points.clear();
+    tickShiftSmall = 0;
+    tickShiftBig = 0;
 }
 
 void GLWidget::animate() {
@@ -81,26 +88,39 @@ void GLWidget::paintEvent(QPaintEvent *event) {
     painter.fillRect(event->rect(), whiteBrush);
     painter.translate(0, 0);
 
+    int shiftLimitSmall = TICK_INTERVAL_SMALL;
+    int shiftLimitBig = TICK_INTERVAL_SMALL * TICK_INTERVAL_BIG;
+
     if (points.size() == painter.window().width()) {
-        tickShift++;
-        if (tickShift == painter.window().width())
-            tickShift = 0;
+        tickShiftSmall++;
+        if (tickShiftSmall == shiftLimitSmall)
+            tickShiftSmall = 0;
+        tickShiftBig++;
+        if (tickShiftBig == shiftLimitBig)
+            tickShiftBig = 0;
     }
 
     for (int x = 0; x < points.size(); x++) {
         painter.save();
 
         painter.setPen(points.at(x) ? blackPen : whitePen);
+        painter.drawPoint(QPoint(x, 12));
         painter.drawPoint(QPoint(x, 13));
         painter.drawPoint(QPoint(x, 14));
         painter.drawPoint(QPoint(x, 15));
         painter.drawPoint(QPoint(x, 16));
-        painter.drawPoint(QPoint(x, 17));
 
         painter.setPen(greyPen);
-        if ((x + tickShift) % TICK_SIZE == 0)
+
+        if ((x + tickShiftSmall) % shiftLimitSmall == 0)
+            painter.drawPoint(QPoint(x, 22));
+
+        if ((x + tickShiftBig) % shiftLimitBig == 0) {
             painter.drawPoint(QPoint(x, 23));
-        painter.drawPoint(QPoint(x, 22));
+            painter.drawPoint(QPoint(x, 24));
+        }
+
+        painter.drawPoint(QPoint(x, 21));
 
         painter.restore();
     }
