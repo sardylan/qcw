@@ -29,6 +29,8 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     timer = new QTimer();
 
     keyStatus = false;
+    tickShift = 0;
+
     setAutoFillBackground(false);
 
     initTimer();
@@ -70,20 +72,36 @@ void GLWidget::paintEvent(QPaintEvent *event) {
     QPen blackPen = QPen(Qt::black);
     blackPen.setWidth(0);
 
+    QPen greyPen = QPen(Qt::lightGray);
+    blackPen.setWidth(0);
+
     QPainter painter;
     painter.begin(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.fillRect(event->rect(), whiteBrush);
     painter.translate(0, 0);
 
+    if (points.size() == painter.window().width()) {
+        tickShift++;
+        if (tickShift == painter.window().width())
+            tickShift = 0;
+    }
+
     for (int x = 0; x < points.size(); x++) {
         painter.save();
+
         painter.setPen(points.at(x) ? blackPen : whitePen);
         painter.drawPoint(QPoint(x, 13));
         painter.drawPoint(QPoint(x, 14));
         painter.drawPoint(QPoint(x, 15));
         painter.drawPoint(QPoint(x, 16));
         painter.drawPoint(QPoint(x, 17));
+
+        painter.setPen(greyPen);
+        if ((x + tickShift) % TICK_SIZE == 0)
+            painter.drawPoint(QPoint(x, 23));
+        painter.drawPoint(QPoint(x, 22));
+
         painter.restore();
     }
 

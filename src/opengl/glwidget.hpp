@@ -25,6 +25,8 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 
+#define TICK_SIZE 15
+
 class GLWidget : public QOpenGLWidget {
 Q_OBJECT
 
@@ -46,6 +48,7 @@ private:
     bool keyStatus;
     QTimer *timer;
     QList<bool> points;
+    int tickShift;
 
     void initTimer();
 
