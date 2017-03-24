@@ -5,5 +5,6 @@
         <file alias="usb.svg">../icons/usb.svg</file>
         <file alias="config.svg">../icons/config.svg</file>
         <file alias="about.svg">../icons/about.svg</file>
+        <file alias="erase.svg">../icons/erase.svg</file>
     </qresource>
 </RCC>
