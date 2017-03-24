@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <config/manager.hpp>
 #include <windows/configwindow.hpp>
+#include <windows/aboutwindow.hpp>
 
 #include "qcw.hpp"
 
@@ -57,6 +58,7 @@ void QCw::prepare() {
 
     connect(mainWindow, SIGNAL(newActionRun(bool)), this, SLOT(newActionRun(bool)));
     connect(mainWindow, SIGNAL(actionConfig()), this, SLOT(showConfigWindow()));
+    connect(mainWindow, SIGNAL(actionAbout()), this, SLOT(showAboutWindow()));
 }
 
 int QCw::run() {
@@ -74,6 +76,10 @@ void QCw::newActionRun(bool status) {
 
 void QCw::showConfigWindow() {
     ConfigWindow configWindow;
-
     configWindow.exec();
+}
+
+void QCw::showAboutWindow() {
+    AboutWindow aboutWindow;
+    aboutWindow.exec();
 }

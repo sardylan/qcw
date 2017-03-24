@@ -30,7 +30,7 @@
 #include <config/config.hpp>
 
 #define APPLICATION_NAME "qCw"
-#define APPLICATION_VERSION "0.99.1"
+#define APPLICATION_VERSION "0.99.2"
 
 #define ORGANIZATION_NAME "The HellNet.org"
 #define ORGANIZATION_DOMAIN "thehellnet.org"
@@ -48,11 +48,13 @@ public:
 
     int run();
 
-public slots:
+private slots:
 
     void newActionRun(bool status);
 
     void showConfigWindow();
+
+    void showAboutWindow();
 
 private:
     Config *config;

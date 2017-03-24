@@ -8,6 +8,11 @@ set(QCW_WINDOWS_CONFIG
         configwindow.hpp
         configwindow.ui)
 
+set(QCW_WINDOWS_ABOUT
+        aboutwindow.cpp
+        aboutwindow.hpp
+        aboutwindow.ui)
+
 find_package(Qt5 REQUIRED COMPONENTS
         Core
         Widgets
@@ -17,7 +22,8 @@ find_package(Qt5 REQUIRED COMPONENTS
 
 add_library(windows
         ${QCW_WINDOWS_MAIN}
-        ${QCW_WINDOWS_CONFIG})
+        ${QCW_WINDOWS_CONFIG}
+        ${QCW_WINDOWS_ABOUT})
 
 target_link_libraries(windows
         config
