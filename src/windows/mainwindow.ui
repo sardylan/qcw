@@ -162,8 +162,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resources.qrc">
-     <normaloff>:/icons/run.svg</normaloff>:/icons/run.svg</iconset>
+    <iconset>
+     <normaloff>:/icons/usb.svg</normaloff>:/icons/usb.svg</iconset>
    </property>
    <property name="text">
     <string>Run</string>
