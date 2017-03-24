@@ -40,7 +40,7 @@ void SerialHandler::start(QString portName, QSerialPort::BaudRate baudRate) {
     serialPort->setFlowControl(QSerialPort::NoFlowControl);
 
     if (serialPort->open(QIODevice::ReadWrite))
-        emit newStatus(true);
+            emit newStatus(true);
 }
 
 void SerialHandler::stop() {
@@ -52,16 +52,19 @@ void SerialHandler::stop() {
 
 void SerialHandler::readData() {
     char c;
-    serialPort->read(&c, 1);
 
-    switch (c) {
-        case '#':
-            emit newEvent(true);
-            break;
-        case ' ':
-            emit newEvent(false);
-            break;
-        default:
-            break;
+    while (serialPort->bytesAvailable() > 0) {
+        serialPort->read(&c, 1);
+
+        switch (c) {
+            case '#':
+                emit newEvent(true);
+                break;
+            case ' ':
+                emit newEvent(false);
+                break;
+            default:
+                break;
+        }
     }
 }
