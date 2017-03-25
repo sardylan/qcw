@@ -28,6 +28,7 @@
 #include <windows/mainwindow.hpp>
 
 #include <config/config.hpp>
+#include <config/status.hpp>
 
 #define APPLICATION_NAME "qCw"
 #define APPLICATION_VERSION "0.99.2"
@@ -56,7 +57,10 @@ private slots:
 
     void showAboutWindow();
 
+    void newSerialStatus(bool newStatus);
+
 private:
+    Status *status;
     Config *config;
     SerialHandler *serialHandler;
     MainWindow *mainWindow;

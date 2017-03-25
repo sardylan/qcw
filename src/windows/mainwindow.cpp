@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     glWidget = new GLWidget(this);
+
+    status = Status::getInstance();
     config = Config::getInstance();
 
     signalConnect();
@@ -68,10 +70,10 @@ void MainWindow::newKeyStatus(bool status) {
     glWidget->setKeyStatus(status);
 }
 
-void MainWindow::newSerialStatus(bool status) {
-    ui->actionSetupRun->setChecked(status);
+void MainWindow::newSerialStatus() {
+    ui->actionSetupRun->setChecked(status->isSerialOpen());
 
-    if (status) {
+    if (status->isSerialOpen()) {
         showStatusBarMessage(QString("Serial port \"%1\" opened").arg(config->getPortName()));
         glWidget->start();
     } else {
@@ -79,7 +81,7 @@ void MainWindow::newSerialStatus(bool status) {
         glWidget->stop();
     }
 
-    ui->actionSetupConfig->setEnabled(!status);
+    ui->actionSetupConfig->setEnabled(!status->isSerialOpen());
 }
 
 void MainWindow::applicationClose() {

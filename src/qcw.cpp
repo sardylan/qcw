@@ -38,7 +38,9 @@ int main(int argc, char *argv[]) {
 }
 
 QCw::QCw(int &argc, char **argv) : QApplication(argc, argv) {
+    status = Status::getInstance();
     config = Config::getInstance();
+
     serialHandler = new SerialHandler();
     mainWindow = new MainWindow();
 }
@@ -46,15 +48,15 @@ QCw::QCw(int &argc, char **argv) : QApplication(argc, argv) {
 QCw::~QCw() {
     delete mainWindow;
     delete serialHandler;
-    delete config;
 }
 
 void QCw::prepare() {
     ConfigManager::load();
     ConfigManager::save();
 
-    connect(serialHandler, SIGNAL(newStatus(bool)), mainWindow, SLOT(newSerialStatus(bool)));
     connect(serialHandler, SIGNAL(newEvent(bool)), mainWindow, SLOT(newKeyStatus(bool)));
+
+    connect(serialHandler, SIGNAL(newStatus(bool)), this, SLOT(newSerialStatus(bool)));
 
     connect(mainWindow, SIGNAL(newActionRun(bool)), this, SLOT(newActionRun(bool)));
     connect(mainWindow, SIGNAL(actionConfig()), this, SLOT(showConfigWindow()));
@@ -82,4 +84,9 @@ void QCw::showConfigWindow() {
 void QCw::showAboutWindow() {
     AboutWindow aboutWindow;
     aboutWindow.exec();
+}
+
+void QCw::newSerialStatus(bool newStatus) {
+    status->setSerialOpen(newStatus);
+    mainWindow->newSerialStatus();
 }

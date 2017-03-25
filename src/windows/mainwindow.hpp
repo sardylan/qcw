@@ -25,8 +25,9 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include <config.hpp>
 #include <glwidget.hpp>
+#include <config.hpp>
+#include <status.hpp>
 
 namespace Ui {
     class MainWindow;
@@ -42,15 +43,17 @@ public:
 
 public slots:
 
-    void newKeyStatus(bool status);
+    void newSerialStatus();
 
-    void newSerialStatus(bool status);
+    void newKeyStatus(bool status);
 
 private:
 
     Ui::MainWindow *ui;
 
     GLWidget *glWidget;
+
+    Status *status;
 
     Config *config;
 

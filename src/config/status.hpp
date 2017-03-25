@@ -19,39 +19,24 @@
  *
  */
 
-#ifndef __QCW_SERIALHANDLER_SERIALHANDLER_H
-#define __QCW_SERIALHANDLER_SERIALHANDLER_H
+#ifndef __QCW_CONFIG_STATUS_H
+#define __QCW_CONFIG_STATUS_H
 
-#include <QObject>
-#include <QSerialPort>
-
-class SerialHandler : public QObject {
-Q_OBJECT
-
-public:
-    explicit SerialHandler(QObject *parent = 0);
-
-    ~SerialHandler();
-
-public slots:
-
-    void start(QString portName, QSerialPort::BaudRate baudRate);
-
-    void stop();
+class Status {
 
 private:
+    Status();
 
-    QSerialPort *serialPort;
+    static Status *instance;
 
-private slots:
+    bool serialOpen;
 
-    void readData();
+public:
+    static Status *getInstance();
 
-signals:
+    bool isSerialOpen() const;
 
-    void newStatus(bool status);
-
-    void newEvent(bool keyStatus);
+    void setSerialOpen(bool serialOpen);
 
 };
 
