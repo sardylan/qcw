@@ -29,14 +29,14 @@ private:
 
     static Status *instance;
 
-    bool serialOpen;
+    bool serialOpened;
 
 public:
     static Status *getInstance();
 
-    bool isSerialOpen() const;
+    bool isSerialOpened() const;
 
-    void setSerialOpen(bool serialOpen);
+    void setSerialOpened(bool serialOpen);
 
 };
 

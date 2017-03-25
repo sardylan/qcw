@@ -19,47 +19,51 @@
  *
  */
 
-#ifndef __QCW_OPENGL_GLWIDGET_H
-#define __QCW_OPENGL_GLWIDGET_H
+#ifndef __QCW_WINDOWS_WIDGETS_STATUSBAR_H
+#define __QCW_WINDOWS_WIDGETS_STATUSBAR_H
 
-#include <QOpenGLWidget>
-#include <QTimer>
+#include <QtCore/QObject>
+#include <QtCore/QTimer>
+#include <QtWidgets/QLabel>
 
-#define TIMER_MILLIS 10
-#define TICK_INTERVAL_SMALL 25
-#define TICK_INTERVAL_BIG 4
+#include <config.hpp>
+#include <status.hpp>
 
-class GLWidget : public QOpenGLWidget {
+class StatusBarWidgets : public QObject {
 Q_OBJECT
 
 public:
-    GLWidget(QWidget *parent = 0);
+    explicit StatusBarWidgets(QObject *parent = 0);
 
-    void setKeyStatus(bool keyStatus);
+    ~StatusBarWidgets();
+
+    QLabel *time;
+    QLabel *habSerial;
 
 public slots:
 
-    void start();
-
-    void stop();
-
-    void clear();
-
-protected:
-    void paintEvent(QPaintEvent *event) override;
+    void updateFromConfig();
 
 private:
-    bool keyStatus;
-    QTimer *timer;
-    QList<bool> points;
-    int tickShiftSmall;
-    int tickShiftBig;
+    Status *status;
+    Config *config;
+    QTimer *timeTimer;
 
-    void initTimer();
+    void initLabelStyle(QLabel *label);
+
+    void initTime();
+
+    void initHabSerial();
+
+    void initTimeTimer();
+
+    static QString serialPortParams(QSerialPort::DataBits dataBits,
+                                    QSerialPort::Parity parity,
+                                    QSerialPort::StopBits stopBits);
 
 private slots:
 
-    void animate();
+    void updateTime();
 };
 
 #endif

@@ -28,7 +28,8 @@
 #include <config.hpp>
 #include <status.hpp>
 
-#include "widget/glwidget.hpp"
+#include "widgets/statusbar.hpp"
+#include "widgets/glwidget.hpp"
 
 namespace Ui {
     class MainWindow;
@@ -52,17 +53,19 @@ private:
 
     Ui::MainWindow *ui;
 
-    GLWidget *glWidget;
-
     Status *status;
-
     Config *config;
+
+    GLWidget *glWidget;
+    StatusBarWidgets *statusBarWidgets;
 
     void signalConnect();
 
     void initOpenGL();
 
     void initUi();
+
+    void initStatusBar();
 
     void showStatusBarMessage(QString message);
 

@@ -73,8 +73,8 @@ void ConfigWindow::initUi() {
 }
 
 void ConfigWindow::initEnableStatus() {
-    ui->serialPortCombo->setEnabled(!status->isSerialOpen());
-    ui->serialSpeedCombo->setEnabled(!status->isSerialOpen());
+    ui->serialPortCombo->setEnabled(!status->isSerialOpened());
+    ui->serialSpeedCombo->setEnabled(!status->isSerialOpened());
 }
 
 void ConfigWindow::handleOK() {

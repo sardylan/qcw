@@ -1,8 +1,10 @@
 set(QCW_WINDOWS_WIDGET_SOURCES
-        widget/glwidget.cpp)
+        widgets/glwidget.cpp
+        widgets/statusbar.cpp)
 
 set(QCW_WINDOWS_WIDGET_HEADERS
-        widget/glwidget.hpp)
+        widgets/glwidget.hpp
+        widgets/statusbar.hpp)
 
 set(QCW_WINDOWS_MAIN
         mainwindow.cpp

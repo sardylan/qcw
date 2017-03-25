@@ -87,6 +87,6 @@ void QCw::showAboutWindow() {
 }
 
 void QCw::newSerialStatus(bool newStatus) {
-    status->setSerialOpen(newStatus);
+    status->setSerialOpened(newStatus);
     mainWindow->newSerialStatus();
 }

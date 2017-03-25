@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     glWidget = new GLWidget(this);
+    statusBarWidgets = new StatusBarWidgets();
 
     status = Status::getInstance();
     config = Config::getInstance();
@@ -36,10 +37,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     signalConnect();
     initOpenGL();
     initUi();
+    initStatusBar();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete statusBarWidgets;
+    delete glWidget;
 }
 
 void MainWindow::signalConnect() {
@@ -60,6 +64,11 @@ void MainWindow::initUi() {
     toogleLamp(ui->keyStatus, false);
 }
 
+void MainWindow::initStatusBar() {
+    ui->statusBar->addPermanentWidget(statusBarWidgets->habSerial);
+    ui->statusBar->addPermanentWidget(statusBarWidgets->time);
+}
+
 void MainWindow::newKeyStatus(bool status) {
     toogleLamp(ui->keyStatus, status);
 
@@ -71,15 +80,14 @@ void MainWindow::newKeyStatus(bool status) {
 }
 
 void MainWindow::newSerialStatus() {
-    ui->actionSetupRun->setChecked(status->isSerialOpen());
+    ui->actionSetupRun->setChecked(status->isSerialOpened());
 
-    if (status->isSerialOpen()) {
-        showStatusBarMessage(QString("Serial port \"%1\" opened").arg(config->getPortName()));
+    if (status->isSerialOpened())
         glWidget->start();
-    } else {
-        showStatusBarMessage("Serial closed");
+    else
         glWidget->stop();
-    }
+
+    statusBarWidgets->updateFromConfig();
 }
 
 void MainWindow::applicationClose() {

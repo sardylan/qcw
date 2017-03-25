@@ -19,25 +19,47 @@
  *
  */
 
-#include "status.hpp"
+#ifndef __QCW_WINDOWS_WIDGETS_GLWIDGET_H
+#define __QCW_WINDOWS_WIDGETS_GLWIDGET_H
 
-Status *Status::instance = nullptr;
+#include <QOpenGLWidget>
+#include <QTimer>
 
-Status *Status::getInstance() {
-    if (instance == 0)
-        instance = new Status();
+#define TIMER_MILLIS 10
+#define TICK_INTERVAL_SMALL 25
+#define TICK_INTERVAL_BIG 4
 
-    return instance;
-}
+class GLWidget : public QOpenGLWidget {
+Q_OBJECT
 
-Status::Status() {
-    serialOpened = false;
-}
+public:
+    GLWidget(QWidget *parent = 0);
 
-bool Status::isSerialOpened() const {
-    return serialOpened;
-}
+    void setKeyStatus(bool keyStatus);
 
-void Status::setSerialOpened(bool serialOpen) {
-    Status::serialOpened = serialOpen;
-}
+public slots:
+
+    void start();
+
+    void stop();
+
+    void clear();
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
+private:
+    bool keyStatus;
+    QTimer *timer;
+    QList<bool> points;
+    int tickShiftSmall;
+    int tickShiftBig;
+
+    void initTimer();
+
+private slots:
+
+    void animate();
+};
+
+#endif
