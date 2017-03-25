@@ -25,9 +25,10 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include <glwidget.hpp>
 #include <config.hpp>
 #include <status.hpp>
+
+#include "widget/glwidget.hpp"
 
 namespace Ui {
     class MainWindow;

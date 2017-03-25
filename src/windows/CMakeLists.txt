@@ -1,3 +1,9 @@
+set(QCW_WINDOWS_WIDGET_SOURCES
+        widget/glwidget.cpp)
+
+set(QCW_WINDOWS_WIDGET_HEADERS
+        widget/glwidget.hpp)
+
 set(QCW_WINDOWS_MAIN
         mainwindow.cpp
         mainwindow.hpp
@@ -21,13 +27,14 @@ find_package(Qt5 REQUIRED COMPONENTS
         OpenGL)
 
 add_library(windows
+        ${QCW_WINDOWS_WIDGET_SOURCES}
+        ${QCW_WINDOWS_WIDGET_HEADERS}
         ${QCW_WINDOWS_MAIN}
         ${QCW_WINDOWS_CONFIG}
         ${QCW_WINDOWS_ABOUT})
 
 target_link_libraries(windows
         config
-        opengl
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets

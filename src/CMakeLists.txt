@@ -1,6 +1,5 @@
 add_subdirectory(config)
 add_subdirectory(handler)
-add_subdirectory(opengl)
 add_subdirectory(windows)
 
 set(QCW_SOURCES
@@ -28,7 +27,6 @@ add_executable(qcw WIN32
 target_link_libraries(qcw
         config
         handler
-        opengl
         windows
         Qt5::Core
         Qt5::Gui
