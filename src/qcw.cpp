@@ -64,7 +64,7 @@ void QCw::prepare() {
 int QCw::run() {
     mainWindow->show();
 
-    return exec();
+    return QApplication::exec();
 }
 
 void QCw::newActionRun(bool status) {
