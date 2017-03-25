@@ -28,10 +28,13 @@
 
 ConfigWindow::ConfigWindow(QWidget *parent) : QDialog(parent), ui(new Ui::ConfigWindow) {
     ui->setupUi(this);
+
+    status = Status::getInstance();
     config = Config::getInstance();
 
     signalConnect();
     initUi();
+    initEnableStatus();
     load();
 }
 
@@ -67,6 +70,11 @@ void ConfigWindow::initUi() {
     ui->serialSpeedCombo->addItem("38400 baud", QSerialPort::Baud38400);
     ui->serialSpeedCombo->addItem("57600 baud", QSerialPort::Baud57600);
     ui->serialSpeedCombo->addItem("115200 baud", QSerialPort::Baud115200);
+}
+
+void ConfigWindow::initEnableStatus() {
+    ui->serialPortCombo->setEnabled(!status->isSerialOpen());
+    ui->serialSpeedCombo->setEnabled(!status->isSerialOpen());
 }
 
 void ConfigWindow::handleOK() {

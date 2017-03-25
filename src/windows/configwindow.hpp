@@ -25,6 +25,7 @@
 #include <QDialog>
 
 #include <config.hpp>
+#include <status.hpp>
 
 namespace Ui {
     class ConfigWindow;
@@ -40,11 +41,14 @@ public:
 
 private:
     Ui::ConfigWindow *ui;
+    Status *status;
     Config *config;
 
     void signalConnect();
 
     void initUi();
+
+    void initEnableStatus();
 
     void load();
 

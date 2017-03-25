@@ -80,8 +80,6 @@ void MainWindow::newSerialStatus() {
         showStatusBarMessage("Serial closed");
         glWidget->stop();
     }
-
-    ui->actionSetupConfig->setEnabled(!status->isSerialOpen());
 }
 
 void MainWindow::applicationClose() {
