@@ -75,11 +75,6 @@ void MainWindow::initStatusBar() {
 
 void MainWindow::newKeyStatus(bool status) {
     toogleLamp(ui->keyStatus, status);
-
-    ui->morseText->moveCursor(QTextCursor::End);
-    ui->morseText->insertPlainText(status ? "#" : "-");
-    ui->morseText->moveCursor(QTextCursor::End);
-
     glWidget->setKeyStatus(status);
 }
 
