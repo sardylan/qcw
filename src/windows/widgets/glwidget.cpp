@@ -31,15 +31,16 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     keyStatus = false;
     tickShiftSmall = 0;
     tickShiftBig = 0;
+    timerMillis = TIMER_MILLIS_DEFAULT;
 
     setAutoFillBackground(false);
 
     initTimer();
+    updateTimerInterval();
 }
 
 void GLWidget::initTimer() {
     connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
-    timer->setInterval(TIMER_MILLIS);
     timer->setSingleShot(false);
 }
 
@@ -130,4 +131,17 @@ void GLWidget::paintEvent(QPaintEvent *event) {
 
 void GLWidget::setKeyStatus(bool keyStatus) {
     GLWidget::keyStatus = keyStatus;
+}
+
+int GLWidget::getTimerMillis() const {
+    return timerMillis;
+}
+
+void GLWidget::setTimerMillis(int timerMillis) {
+    GLWidget::timerMillis = timerMillis;
+    updateTimerInterval();
+}
+
+void GLWidget::updateTimerInterval() {
+    timer->setInterval(timerMillis);
 }

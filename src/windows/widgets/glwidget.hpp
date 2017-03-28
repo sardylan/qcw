@@ -25,7 +25,7 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 
-#define TIMER_MILLIS 10
+#define TIMER_MILLIS_DEFAULT 10
 #define TICK_INTERVAL_SMALL 25
 #define TICK_INTERVAL_BIG 4
 
@@ -36,6 +36,10 @@ public:
     GLWidget(QWidget *parent = 0);
 
     void setKeyStatus(bool keyStatus);
+
+    int getTimerMillis() const;
+
+    void setTimerMillis(int timerMillis);
 
 public slots:
 
@@ -52,6 +56,7 @@ private:
     bool keyStatus;
     QTimer *timer;
     QList<bool> points;
+    int timerMillis;
     int tickShiftSmall;
     int tickShiftBig;
 
@@ -60,6 +65,8 @@ private:
 private slots:
 
     void animate();
+
+    void updateTimerInterval();
 };
 
 #endif
