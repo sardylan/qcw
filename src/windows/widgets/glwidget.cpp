@@ -56,6 +56,9 @@ void GLWidget::clear() {
     points.clear();
     tickShiftSmall = 0;
     tickShiftBig = 0;
+
+    if (!timer->isActive())
+        animate();
 }
 
 void GLWidget::animate() {
