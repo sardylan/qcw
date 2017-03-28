@@ -64,6 +64,8 @@ void MainWindow::initOpenGL() {
 
 void MainWindow::initUi() {
     toogleLamp(ui->keyStatus, false);
+
+    ui->timerIntervalSlider->setValue(glWidget->getTimerMillis());
 }
 
 void MainWindow::initStatusBar() {
