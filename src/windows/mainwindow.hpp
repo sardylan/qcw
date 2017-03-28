@@ -85,6 +85,8 @@ private slots:
 
     void clearText();
 
+    void updateLineInterval(int value);
+
 signals:
 
     void newActionRun(bool);

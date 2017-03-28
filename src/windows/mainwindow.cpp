@@ -54,6 +54,8 @@ void MainWindow::signalConnect() {
 
     connect(ui->clearLineButton, SIGNAL(clicked()), this, SLOT(clearLine()));
     connect(ui->clearTextButton, SIGNAL(clicked()), this, SLOT(clearText()));
+
+    connect(ui->timerIntervalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateLineInterval(int)));
 }
 
 void MainWindow::initOpenGL() {
@@ -125,4 +127,8 @@ void MainWindow::clearLine() {
 
 void MainWindow::clearText() {
     ui->morseText->clear();
+}
+
+void MainWindow::updateLineInterval(int value) {
+    glWidget->setTimerMillis(ui->timerIntervalSlider->maximum() - value);
 }
