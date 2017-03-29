@@ -52,6 +52,8 @@ bool inDot = false;
 bool inDash = false;
 bool inWait = false;
 
+bool serialKey = false;
+
 void setup() {
     pinMode(PIN_LED_GENERIC, OUTPUT);
     pinMode(PIN_LED_DOT, OUTPUT);
@@ -71,12 +73,15 @@ void setup() {
 }
 
 void loop() {
+    if (Serial.available() > 0)
+        serialKey = readSerialData();
+
     bool pinKeyDot = digitalRead(PIN_KEY_DOT);
     bool pinKeyDash = digitalRead(PIN_KEY_DASH);
     bool pinKeyManual = digitalRead(PIN_KEY_MANUAL);
 
-    if (pinKeyDot || pinKeyDash || pinKeyManual) {
-        if (pinKeyManual) {
+    if (pinKeyDot || pinKeyDash || pinKeyManual || serialKey) {
+        if (pinKeyManual || serialKey) {
             ledDot(true);
             ledDash(true);
             sound = true;
@@ -94,7 +99,9 @@ void loop() {
 
     ledGeneric();
     doSound();
-    serial();
+
+    if (!serialKey)
+        serial();
 }
 
 void ledGeneric() {
@@ -166,4 +173,15 @@ void serial() {
         Serial.write(" ");
 
     Serial.flush();
+}
+
+bool readSerialData() {
+    char c = Serial.read();
+
+    switch (c) {
+        case '#':
+            return true;
+        default:
+            return false;
+    }
 }
