@@ -31,7 +31,7 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     keyStatus = false;
     tickShiftSmall = 0;
     tickShiftBig = 0;
-    timerMillis = TIMER_MILLIS_DEFAULT;
+    timerMillis = GLWIDGET_TIMER_MILLIS_DEFAULT;
 
     setAutoFillBackground(false);
 
@@ -96,8 +96,8 @@ void GLWidget::paintEvent(QPaintEvent *event) {
     painter.fillRect(event->rect(), whiteBrush);
     painter.translate(0, 0);
 
-    int shiftLimitSmall = TICK_INTERVAL_SMALL;
-    int shiftLimitBig = TICK_INTERVAL_SMALL * TICK_INTERVAL_BIG;
+    int shiftLimitSmall = GLWIDGET_TICK_INTERVAL_SMALL;
+    int shiftLimitBig = GLWIDGET_TICK_INTERVAL_SMALL * GLWIDGET_TICK_INTERVAL_BIG;
 
     if (points.size() == painter.window().width()) {
         tickShiftSmall++;

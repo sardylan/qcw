@@ -29,6 +29,7 @@
 
 #include <config/config.hpp>
 #include <config/status.hpp>
+#include <morsecodec/encoder.hpp>
 
 #define APPLICATION_NAME "qCw"
 #define APPLICATION_VERSION "0.99.2"
@@ -49,6 +50,13 @@ public:
 
     int run();
 
+private:
+    Status *status;
+    Config *config;
+    SerialHandler *serialHandler;
+    MainWindow *mainWindow;
+    MorseEncoder *morseEncoder;
+
 private slots:
 
     void newActionRun(bool status);
@@ -58,13 +66,6 @@ private slots:
     void showAboutWindow();
 
     void newSerialStatus(bool newStatus);
-
-private:
-    Status *status;
-    Config *config;
-    SerialHandler *serialHandler;
-    MainWindow *mainWindow;
-
 };
 
 #endif

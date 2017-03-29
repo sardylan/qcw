@@ -39,6 +39,8 @@ public slots:
 
     void stop();
 
+    void writeData(bool keyStatus);
+
 private:
 
     QSerialPort *serialPort;
@@ -52,7 +54,6 @@ signals:
     void newStatus(bool status);
 
     void newEvent(bool keyStatus);
-
 };
 
 #endif

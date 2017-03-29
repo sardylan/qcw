@@ -25,9 +25,9 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 
-#define TIMER_MILLIS_DEFAULT 10
-#define TICK_INTERVAL_SMALL 25
-#define TICK_INTERVAL_BIG 4
+#define GLWIDGET_TIMER_MILLIS_DEFAULT 10
+#define GLWIDGET_TICK_INTERVAL_SMALL 25
+#define GLWIDGET_TICK_INTERVAL_BIG 4
 
 class GLWidget : public QOpenGLWidget {
 Q_OBJECT

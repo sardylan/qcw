@@ -68,3 +68,18 @@ void SerialHandler::readData() {
         }
     }
 }
+
+void SerialHandler::writeData(bool keyStatus) {
+    if (!serialPort->isOpen()) {
+        return;
+    }
+
+    QByteArray byteArray;
+    if (keyStatus)
+        byteArray.append('#');
+    else
+        byteArray.append(' ');
+
+    serialPort->write(byteArray);
+    serialPort->flush();
+}

@@ -42,11 +42,15 @@ QCw::QCw(int &argc, char **argv) : QApplication(argc, argv) {
     config = Config::getInstance();
 
     serialHandler = new SerialHandler();
+    morseEncoder = new MorseEncoder();
+
     mainWindow = new MainWindow();
 }
 
 QCw::~QCw() {
     delete mainWindow;
+
+    delete morseEncoder;
     delete serialHandler;
 }
 
@@ -55,8 +59,10 @@ void QCw::prepare() {
     ConfigManager::save();
 
     connect(serialHandler, SIGNAL(newEvent(bool)), mainWindow, SLOT(newKeyStatus(bool)));
-
     connect(serialHandler, SIGNAL(newStatus(bool)), this, SLOT(newSerialStatus(bool)));
+
+    connect(morseEncoder, SIGNAL(newEvent(bool)), mainWindow, SLOT(newKeyStatus(bool)));
+    connect(morseEncoder, SIGNAL(newEvent(bool)), serialHandler, SLOT(writeData(bool)));
 
     connect(mainWindow, SIGNAL(newActionRun(bool)), this, SLOT(newActionRun(bool)));
     connect(mainWindow, SIGNAL(actionConfig()), this, SLOT(showConfigWindow()));
@@ -70,10 +76,12 @@ int QCw::run() {
 }
 
 void QCw::newActionRun(bool status) {
-    if (status)
+    if (status) {
         serialHandler->start(config->getPortName(), config->getPortSpeed());
-    else
+    } else {
+        morseEncoder->stop();
         serialHandler->stop();
+    }
 }
 
 void QCw::showConfigWindow() {
