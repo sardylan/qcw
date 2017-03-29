@@ -35,6 +35,8 @@ Q_OBJECT
 public:
     GLWidget(QWidget *parent = 0);
 
+    ~GLWidget();
+
     void setKeyStatus(bool keyStatus);
 
     int getTimerMillis() const;

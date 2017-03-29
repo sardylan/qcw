@@ -39,6 +39,10 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     updateTimerInterval();
 }
 
+GLWidget::~GLWidget() {
+    delete timer;
+}
+
 void GLWidget::initTimer() {
     connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
     timer->setSingleShot(false);
