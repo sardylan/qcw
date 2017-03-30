@@ -23,9 +23,11 @@
 #define __QCW_MORSECODEC_ENCODER_H
 
 #include <QObject>
-#include <QtCore/QTimer>
+#include <QTimer>
+#include <QQueue>
+#include <QHash>
 
-#define MORSE_ENCODER_TIMER_MILLIS_DEFAULT 200
+#define MORSE_ENCODER_TIMER_MILLIS_DEFAULT 90
 
 class MorseEncoder : public QObject {
 Q_OBJECT
@@ -35,26 +37,24 @@ public:
 
     ~MorseEncoder();
 
-    const QString &getText() const;
-
-    void setText(const QString &text);
-
-    int getSpeed() const;
-
-    void setSpeed(int speed);
+public slots:
 
     void start();
 
     void stop();
 
+    void setText(QString text);
+
+    void setSpeed(int speed);
+
 private:
 
+    QTimer *timer;
     QString text;
     int timerMillis;
-
-    QTimer *timer;
     int position;
-    int pulseLength;
+    QQueue<bool> symbols;
+    QHash<QChar, QList<int>> morseTable;
 
     void initTimer();
 
@@ -62,11 +62,11 @@ private:
 
 private slots:
 
-    void sendChar();
+    void sendSymbol();
 
 signals:
 
-//    void newStatus(bool status);
+    void newStatus(bool status);
 
     void newEvent(bool keyStatus);
 };

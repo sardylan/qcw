@@ -2,6 +2,7 @@ set(QCW_MORSECODEC_SOURCES
         encoder.cpp)
 
 set(QCW_MORSECODEC_HEADERS
+        table.hpp
         encoder.hpp)
 
 find_package(Qt5 REQUIRED COMPONENTS

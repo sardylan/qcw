@@ -20,12 +20,15 @@
  */
 
 #include "encoder.hpp"
+#include "table.hpp"
 
-MorseEncoder::MorseEncoder(QObject *parent) : QObject(parent) {
+MorseEncoder::MorseEncoder(QObject *parent) :
+        QObject(parent),
+        morseTable(initMorseTable()) {
     timer = new QTimer();
     text = "";
     timerMillis = MORSE_ENCODER_TIMER_MILLIS_DEFAULT;
-    pulseLength = -1;
+    symbols.clear();
 
     initTimer();
     updateTimerInterval();
@@ -36,20 +39,13 @@ MorseEncoder::~MorseEncoder() {
 }
 
 void MorseEncoder::initTimer() {
-    connect(timer, SIGNAL(timeout()), this, SLOT(sendChar()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(sendSymbol()));
     timer->setSingleShot(false);
 }
 
-const QString &MorseEncoder::getText() const {
-    return text;
-}
-
-void MorseEncoder::setText(const QString &text) {
+void MorseEncoder::setText(QString text) {
     MorseEncoder::text = text;
-}
-
-int MorseEncoder::getSpeed() const {
-    return timerMillis;
+    position = 0;
 }
 
 void MorseEncoder::setSpeed(int speed) {
@@ -62,30 +58,60 @@ void MorseEncoder::updateTimerInterval() {
 }
 
 void MorseEncoder::start() {
+    emit newStatus(true);
     emit newEvent(false);
     timer->start();
 }
 
 void MorseEncoder::stop() {
     timer->stop();
+    position = 0;
     emit newEvent(false);
+    emit newStatus(false);
 }
 
-void MorseEncoder::sendChar() {
-    pulseLength--;
+void MorseEncoder::sendSymbol() {
+    if (symbols.isEmpty()) {
+        if (position == text.length()) {
+            stop();
+            return;
+        }
 
-    if (pulseLength < -1)
-        pulseLength = -1;
+        QChar c = text.at(position).toUpper();
+        position++;
 
-    switch (pulseLength) {
-        case 0:
-            emit newEvent(false);
-            break;
-        case -1:
-            pulseLength = 3;
-            emit newEvent(true);
-            break;
-        default:
-            emit newEvent(true);
+        if (c == ' ') {
+            symbols.enqueue(false);
+            symbols.enqueue(false);
+            symbols.enqueue(false);
+            symbols.enqueue(false);
+        } else {
+            QList<int> symbs = morseTable.value(c);
+
+            QList<int>::iterator iterator;
+            for (iterator = symbs.begin(); iterator != symbs.end(); ++iterator) {
+                int size = *iterator;
+
+                switch (size) {
+                    case DOT:
+                        symbols.enqueue(true);
+                        break;
+                    case DASH:
+                        symbols.enqueue(true);
+                        symbols.enqueue(true);
+                        symbols.enqueue(true);
+                        break;
+                    default:
+                        break;
+                }
+
+                symbols.enqueue(false);
+            }
+
+            symbols.enqueue(false);
+            symbols.enqueue(false);
+        }
     }
+
+    emit newEvent(symbols.dequeue());
 }
