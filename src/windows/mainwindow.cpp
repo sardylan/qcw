@@ -56,6 +56,9 @@ void MainWindow::signalConnect() {
     connect(ui->clearTextButton, SIGNAL(clicked()), this, SLOT(clearText()));
 
     connect(ui->timerIntervalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateLineInterval(int)));
+
+    connect(ui->playButton, SIGNAL(clicked()), this, SLOT(tooglePlayer()));
+    connect(ui->morseText, SIGNAL(selectionChanged()), this, SLOT(emitNewSelectedText()));
 }
 
 void MainWindow::initOpenGL() {
@@ -76,6 +79,10 @@ void MainWindow::initStatusBar() {
 void MainWindow::newKeyStatus(bool status) {
     toogleLamp(ui->keyStatus, status);
     glWidget->setKeyStatus(status);
+}
+
+void MainWindow::newEncoderStatus(bool status) {
+    ui->playButton->setChecked(status);
 }
 
 void MainWindow::newSerialStatus() {
@@ -128,4 +135,13 @@ void MainWindow::clearText() {
 
 void MainWindow::updateLineInterval(int value) {
     glWidget->setTimerMillis(ui->timerIntervalSlider->maximum() - value);
+}
+
+void MainWindow::emitNewSelectedText() {
+    QString selectedText = ui->morseText->textCursor().selectedText();
+    emit newSelectedText(selectedText);
+}
+
+void MainWindow::tooglePlayer() {
+    emit newActionPlayer(ui->playButton->isChecked());
 }

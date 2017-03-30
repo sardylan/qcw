@@ -58,15 +58,18 @@ void QCw::prepare() {
     ConfigManager::load();
     ConfigManager::save();
 
-    connect(serialHandler, SIGNAL(newEvent(bool)), mainWindow, SLOT(newKeyStatus(bool)));
     connect(serialHandler, SIGNAL(newStatus(bool)), this, SLOT(newSerialStatus(bool)));
+    connect(serialHandler, SIGNAL(newEvent(bool)), mainWindow, SLOT(newKeyStatus(bool)));
 
+    connect(morseEncoder, SIGNAL(newStatus(bool)), mainWindow, SLOT(newEncoderStatus(bool)));
     connect(morseEncoder, SIGNAL(newEvent(bool)), mainWindow, SLOT(newKeyStatus(bool)));
     connect(morseEncoder, SIGNAL(newEvent(bool)), serialHandler, SLOT(writeData(bool)));
 
     connect(mainWindow, SIGNAL(newActionRun(bool)), this, SLOT(newActionRun(bool)));
+    connect(mainWindow, SIGNAL(newActionPlayer(bool)), this, SLOT(newActionPlayer(bool)));
     connect(mainWindow, SIGNAL(actionConfig()), this, SLOT(showConfigWindow()));
     connect(mainWindow, SIGNAL(actionAbout()), this, SLOT(showAboutWindow()));
+    connect(mainWindow, SIGNAL(newSelectedText(QString)), morseEncoder, SLOT(setText(QString)));
 }
 
 int QCw::run() {
@@ -82,6 +85,13 @@ void QCw::newActionRun(bool status) {
         morseEncoder->stop();
         serialHandler->stop();
     }
+}
+
+void QCw::newActionPlayer(bool status) {
+    if (status)
+        morseEncoder->start();
+    else
+        morseEncoder->stop();
 }
 
 void QCw::showConfigWindow() {

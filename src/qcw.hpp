@@ -32,7 +32,7 @@
 #include <morsecodec/encoder.hpp>
 
 #define APPLICATION_NAME "qCw"
-#define APPLICATION_VERSION "0.99.2"
+#define APPLICATION_VERSION "0.99.3"
 
 #define ORGANIZATION_NAME "The HellNet.org"
 #define ORGANIZATION_DOMAIN "thehellnet.org"
@@ -60,6 +60,8 @@ private:
 private slots:
 
     void newActionRun(bool status);
+
+    void newActionPlayer(bool status);
 
     void showConfigWindow();
 

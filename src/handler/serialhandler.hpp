@@ -44,6 +44,9 @@ public slots:
 private:
 
     QSerialPort *serialPort;
+    bool lastStatus;
+
+    void emitNewStatus(bool newStatus);
 
 private slots:
 

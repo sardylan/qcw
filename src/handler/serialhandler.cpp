@@ -23,6 +23,7 @@
 
 SerialHandler::SerialHandler(QObject *parent) : QObject(parent) {
     serialPort = new QSerialPort();
+    lastStatus = false;
 
     connect(serialPort, SIGNAL(readyRead()), this, SLOT(readData()));
 }
@@ -58,21 +59,32 @@ void SerialHandler::readData() {
 
         switch (c) {
             case '#':
-                emit newEvent(true);
+                emitNewStatus(true);
                 break;
-            case ' ':
-                emit newEvent(false);
-                break;
+
             default:
-                break;
+                emitNewStatus(false);
         }
     }
+}
+
+void SerialHandler::emitNewStatus(bool newStatus) {
+    if (newStatus == lastStatus)
+        return;
+
+    lastStatus = newStatus;
+    emit newEvent(newStatus);
 }
 
 void SerialHandler::writeData(bool keyStatus) {
     if (!serialPort->isOpen()) {
         return;
     }
+
+    if (keyStatus == lastStatus)
+        return;
+
+    lastStatus = keyStatus;
 
     QByteArray byteArray;
     if (keyStatus)

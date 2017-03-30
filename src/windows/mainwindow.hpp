@@ -49,6 +49,8 @@ public slots:
 
     void newKeyStatus(bool status);
 
+    void newEncoderStatus(bool status);
+
 private:
 
     Ui::MainWindow *ui;
@@ -87,6 +89,10 @@ private slots:
 
     void updateLineInterval(int value);
 
+    void emitNewSelectedText();
+
+    void tooglePlayer();
+
 signals:
 
     void newActionRun(bool);
@@ -94,6 +100,10 @@ signals:
     void actionConfig();
 
     void actionAbout();
+
+    void newSelectedText(QString text);
+
+    void newActionPlayer(bool);
 };
 
 #endif
