@@ -49,12 +49,14 @@ void MorseEncoder::setText(QString text) {
 }
 
 void MorseEncoder::setSpeed(int speed) {
-    MorseEncoder::timerMillis = speed;
+    if (speed >= MORSE_ENCODER_TIMER_MILLIS_MIN && speed <= MORSE_ENCODER_TIMER_MILLIS_MAX)
+        MorseEncoder::timerMillis = speed;
+
     updateTimerInterval();
 }
 
 void MorseEncoder::updateTimerInterval() {
-    timer->setInterval(timerMillis);
+    timer->setInterval(MORSE_ENCODER_TIMER_MILLIS_MAX - (timerMillis - MORSE_ENCODER_TIMER_MILLIS_MIN));
 }
 
 void MorseEncoder::start() {

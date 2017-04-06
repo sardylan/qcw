@@ -89,6 +89,8 @@ private slots:
 
     void updateLineInterval(int value);
 
+    void updateEncoderSpeed(int value);
+
     void emitNewSelectedText();
 
     void tooglePlayer();
@@ -104,6 +106,8 @@ signals:
     void newSelectedText(QString text);
 
     void newActionPlayer(bool);
+
+    void newEncoderSpeed(int);
 };
 
 #endif

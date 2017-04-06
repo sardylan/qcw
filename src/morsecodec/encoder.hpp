@@ -27,7 +27,9 @@
 #include <QQueue>
 #include <QHash>
 
-#define MORSE_ENCODER_TIMER_MILLIS_DEFAULT 90
+#define MORSE_ENCODER_TIMER_MILLIS_MIN 45
+#define MORSE_ENCODER_TIMER_MILLIS_MAX 160
+#define MORSE_ENCODER_TIMER_MILLIS_DEFAULT 85
 
 class MorseEncoder : public QObject {
 Q_OBJECT

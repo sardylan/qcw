@@ -24,6 +24,7 @@
 
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
+#include <encoder.hpp>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -57,6 +58,8 @@ void MainWindow::signalConnect() {
 
     connect(ui->timerIntervalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateLineInterval(int)));
 
+    connect(ui->encoderSpeedSlider, SIGNAL(valueChanged(int)), this, SLOT(updateEncoderSpeed(int)));
+
     connect(ui->playButton, SIGNAL(clicked()), this, SLOT(tooglePlayer()));
     connect(ui->morseText, SIGNAL(selectionChanged()), this, SLOT(emitNewSelectedText()));
 }
@@ -70,7 +73,13 @@ void MainWindow::initUi() {
 
     ui->timerIntervalSlider->setMinimum(GLWIDGET_TIMER_MILLIS_MIN);
     ui->timerIntervalSlider->setMaximum(GLWIDGET_TIMER_MILLIS_MAX);
-    ui->timerIntervalSlider->setValue(glWidget->getTimerMillis());
+    ui->timerIntervalSlider->setValue(GLWIDGET_TIMER_MILLIS_DEFAULT);
+    ui->timerIntervalSlider->setTickInterval((GLWIDGET_TIMER_MILLIS_MAX - GLWIDGET_TIMER_MILLIS_MIN) / 10);
+
+    ui->encoderSpeedSlider->setMinimum(MORSE_ENCODER_TIMER_MILLIS_MIN);
+    ui->encoderSpeedSlider->setMaximum(MORSE_ENCODER_TIMER_MILLIS_MAX);
+    ui->encoderSpeedSlider->setValue(MORSE_ENCODER_TIMER_MILLIS_DEFAULT);
+    ui->encoderSpeedSlider->setTickInterval((MORSE_ENCODER_TIMER_MILLIS_MAX - MORSE_ENCODER_TIMER_MILLIS_MIN) / 10);
 }
 
 void MainWindow::initStatusBar() {
@@ -137,6 +146,10 @@ void MainWindow::clearText() {
 
 void MainWindow::updateLineInterval(int value) {
     glWidget->setTimerMillis(value);
+}
+
+void MainWindow::updateEncoderSpeed(int value) {
+    emit newEncoderSpeed(value);
 }
 
 void MainWindow::emitNewSelectedText() {

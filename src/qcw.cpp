@@ -70,6 +70,7 @@ void QCw::prepare() {
     connect(mainWindow, SIGNAL(actionConfig()), this, SLOT(showConfigWindow()));
     connect(mainWindow, SIGNAL(actionAbout()), this, SLOT(showAboutWindow()));
     connect(mainWindow, SIGNAL(newSelectedText(QString)), morseEncoder, SLOT(setText(QString)));
+    connect(mainWindow, SIGNAL(newEncoderSpeed(int)), morseEncoder, SLOT(setSpeed(int)));
 }
 
 int QCw::run() {
