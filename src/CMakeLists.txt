@@ -7,6 +7,7 @@ set(QCW_SOURCES
         qcw.cpp)
 
 set(QCW_HEADERS
+        version.hpp
         qcw.hpp)
 
 set(QCW_RESOURCES

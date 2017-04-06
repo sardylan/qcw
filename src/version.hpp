@@ -19,52 +19,13 @@
  *
  */
 
-#ifndef __QCW_QCW_H
-#define __QCW_QCW_H
+#ifndef __QCW_VERSION_H
+#define __QCW_VERSION_H
 
-#include "version.hpp"
+#define APPLICATION_NAME "qCw"
+#define APPLICATION_VERSION "0.99.4"
 
-#include <QApplication>
-
-#include <handler/serialhandler.hpp>
-#include <windows/mainwindow.hpp>
-
-#include <config/config.hpp>
-#include <config/status.hpp>
-#include <morsecodec/encoder.hpp>
-
-
-class QCw : public QApplication {
-Q_OBJECT
-
-public:
-
-    explicit QCw(int &argc, char **argv);
-
-    ~QCw();
-
-    void prepare();
-
-    int run();
-
-private:
-    Status *status;
-    Config *config;
-    SerialHandler *serialHandler;
-    MainWindow *mainWindow;
-    MorseEncoder *morseEncoder;
-
-private slots:
-
-    void newActionRun(bool status);
-
-    void newActionPlayer(bool status);
-
-    void showConfigWindow();
-
-    void showAboutWindow();
-
-    void newSerialStatus(bool newStatus);
-};
+#define ORGANIZATION_NAME "The HellNet.org"
+#define ORGANIZATION_DOMAIN "thehellnet.org"
 
 #endif
