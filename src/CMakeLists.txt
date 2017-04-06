@@ -17,6 +17,7 @@ set(QCW_RESOURCES
 find_package(Qt5 REQUIRED COMPONENTS
         Core
         Gui
+        Svg
         Widgets
         SerialPort
         OpenGL)
@@ -47,6 +48,7 @@ target_link_libraries(qcw
         windows
         Qt5::Core
         Qt5::Gui
+        Qt5::Svg
         Qt5::Widgets
         Qt5::SerialPort
         Qt5::OpenGL)

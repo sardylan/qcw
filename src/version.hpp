@@ -23,7 +23,7 @@
 #define __QCW_VERSION_H
 
 #define APPLICATION_NAME "qCw"
-#define APPLICATION_VERSION "0.99.4"
+#define APPLICATION_VERSION "0.99.5"
 
 #define ORGANIZATION_NAME "The HellNet.org"
 #define ORGANIZATION_DOMAIN "thehellnet.org"
