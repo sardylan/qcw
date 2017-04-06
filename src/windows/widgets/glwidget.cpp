@@ -145,10 +145,12 @@ int GLWidget::getTimerMillis() const {
 }
 
 void GLWidget::setTimerMillis(int timerMillis) {
-    GLWidget::timerMillis = timerMillis;
+    if (timerMillis >= GLWIDGET_TIMER_MILLIS_MIN && timerMillis <= GLWIDGET_TIMER_MILLIS_MAX)
+        GLWidget::timerMillis = timerMillis;
+
     updateTimerInterval();
 }
 
 void GLWidget::updateTimerInterval() {
-    timer->setInterval(timerMillis);
+    timer->setInterval(GLWIDGET_TIMER_MILLIS_MAX - (timerMillis - GLWIDGET_TIMER_MILLIS_MIN));
 }

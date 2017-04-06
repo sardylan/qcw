@@ -68,6 +68,8 @@ void MainWindow::initOpenGL() {
 void MainWindow::initUi() {
     toogleLamp(ui->keyStatus, false);
 
+    ui->timerIntervalSlider->setMinimum(GLWIDGET_TIMER_MILLIS_MIN);
+    ui->timerIntervalSlider->setMaximum(GLWIDGET_TIMER_MILLIS_MAX);
     ui->timerIntervalSlider->setValue(glWidget->getTimerMillis());
 }
 
@@ -134,7 +136,7 @@ void MainWindow::clearText() {
 }
 
 void MainWindow::updateLineInterval(int value) {
-    glWidget->setTimerMillis(ui->timerIntervalSlider->maximum() - value);
+    glWidget->setTimerMillis(value);
 }
 
 void MainWindow::emitNewSelectedText() {
