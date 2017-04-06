@@ -20,7 +20,12 @@ find_package(Qt5 REQUIRED COMPONENTS
         SerialPort
         OpenGL)
 
-add_executable(qcw WIN32
+set(MACOSX_BUNDLE_EXECUTABLE_NAME qcw)
+set(MACOSX_BUNDLE_ICON_FILE icons/icon.icns)
+set(MACOSX_BUNDLE_BUNDLE_NAME qCw)
+
+add_executable(qcw
+        WIN32 MACOSX_BUNDLE
         ${QCW_SOURCES}
         ${QCW_HEADERS}
         ${QCW_RESOURCES})
