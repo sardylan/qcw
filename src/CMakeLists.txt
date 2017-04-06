@@ -21,15 +21,24 @@ find_package(Qt5 REQUIRED COMPONENTS
         SerialPort
         OpenGL)
 
+set(QCW_MAC_ICON_NAME icon.icns)
+set(QCW_MAC_ICON_PATH ../icons/macos/icon.icns)
+
+set_source_files_properties(${QCW_MAC_ICON_PATH}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION
+        Resources)
+
 set(MACOSX_BUNDLE_EXECUTABLE_NAME qcw)
-set(MACOSX_BUNDLE_ICON_FILE icons/icon.icns)
 set(MACOSX_BUNDLE_BUNDLE_NAME qCw)
+set(MACOSX_BUNDLE_ICON_FILE ${QCW_MAC_ICON_NAME})
 
 add_executable(qcw
         WIN32 MACOSX_BUNDLE
         ${QCW_SOURCES}
         ${QCW_HEADERS}
-        ${QCW_RESOURCES})
+        ${QCW_RESOURCES}
+        ${QCW_MAC_ICON_PATH})
 
 target_link_libraries(qcw
         config
@@ -41,3 +50,8 @@ target_link_libraries(qcw
         Qt5::Widgets
         Qt5::SerialPort
         Qt5::OpenGL)
+
+set_target_properties(qcw
+        PROPERTIES
+        MACOSX_BUNDLE_ICON_FILE
+        ${QCW_MAC_ICON_NAME})
